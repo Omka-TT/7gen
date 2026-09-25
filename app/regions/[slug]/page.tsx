@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import LeadForm from '@/components/LeadForm';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,12 +41,13 @@ export default async function RegionPage({
       {places && places.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {places.map((place) => (
-            <div key={place.id} className="border rounded-xl p-5">
-              <h3 className="font-semibold">{place.name}</h3>
-              <p className="text-sm text-gray-500">{place.type}</p>
-              <p className="text-sm text-gray-600 mt-2">{place.description_ru}</p>
-            </div>
-          ))}
+  <div key={place.id} className="border rounded-xl p-5">
+    <h3 className="font-semibold">{place.name}</h3>
+    <p className="text-sm text-gray-500">{place.type}</p>
+    <p className="text-sm text-gray-600 mt-2">{place.description_ru}</p>
+    <LeadForm placeId={place.id} />
+  </div>
+))}
         </div>
       ) : (
         <p className="text-gray-500">Пока здесь нет добавленных мест.</p>
