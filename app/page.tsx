@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default async function Home() {
   const { data: regions } = await supabase
@@ -12,16 +13,17 @@ export default async function Home() {
       <p className="text-gray-500 mb-8">Выберите область, чтобы узнать больше</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {regions?.map((region) => (
-          <div
-            key={region.id}
-            className="border rounded-xl p-5 hover:shadow-lg transition-shadow cursor-pointer"
-          >
-            <h2 className="text-xl font-semibold mb-2">{region.name_ru}</h2>
-            <p className="text-gray-600 text-sm">{region.description_ru}</p>
-          </div>
-        ))}
-      </div>
+  {regions?.map((region) => (
+    <Link
+      key={region.id}
+      href={`/regions/${region.slug}`}
+      className="border rounded-xl p-5 hover:shadow-lg transition-shadow block"
+    >
+      <h2 className="text-xl font-semibold mb-2">{region.name_ru}</h2>
+      <p className="text-gray-600 text-sm">{region.description_ru}</p>
+    </Link>
+  ))}
+</div>
     </main>
   );
 }
