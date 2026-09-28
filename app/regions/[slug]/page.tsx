@@ -28,30 +28,38 @@ export default async function RegionPage({
     .eq('region_id', region.id);
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10">
-      <Link href="/" className="text-sm text-gray-500 hover:underline">
-        ← Все регионы
-      </Link>
+  <main className="max-w-6xl mx-auto px-4 py-10">
+    <Link href="/" className="text-sm text-gray-500 hover:text-red-600 transition-colors">
+      ← Все регионы
+    </Link>
 
-      <h1 className="text-3xl font-bold mt-4 mb-2">{region.name_ru}</h1>
-      <p className="text-gray-600 mb-8">{region.description_ru}</p>
+    <h1 className="text-3xl font-bold mt-4 mb-2 text-black">{region.name_ru}</h1>
+    <p className="text-gray-500 mb-10 max-w-2xl">{region.description_ru}</p>
 
-      <h2 className="text-xl font-semibold mb-4">Места в этом регионе</h2>
+    <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-black">
+      <span className="w-1.5 h-1.5 rounded-full bg-red-600" />
+      Места в этом регионе
+    </h2>
 
-      {places && places.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {places.map((place) => (
-  <div key={place.id} className="border rounded-xl p-5">
-    <h3 className="font-semibold">{place.name}</h3>
-    <p className="text-sm text-gray-500">{place.type}</p>
-    <p className="text-sm text-gray-600 mt-2">{place.description_ru}</p>
-    <LeadForm placeId={place.id} />
-  </div>
-))}
-        </div>
-      ) : (
-        <p className="text-gray-500">Пока здесь нет добавленных мест.</p>
-      )}
-    </main>
-  );
+    {places && places.length > 0 ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        {places.map((place) => (
+          <div
+            key={place.id}
+            className="border border-red-200 rounded-xl p-5 bg-white hover:border-red-500 transition-colors"
+          >
+            <h3 className="font-semibold text-black">{place.name}</h3>
+            <p className="text-xs uppercase tracking-wide text-red-600 mt-1">
+              {place.type}
+            </p>
+            <p className="text-sm text-gray-500 mt-2">{place.description_ru}</p>
+            <LeadForm placeId={place.id} />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p className="text-gray-500">Пока здесь нет добавленных мест.</p>
+    )}
+  </main>
+);
 }

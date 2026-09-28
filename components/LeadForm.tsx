@@ -36,48 +36,48 @@ export default function LeadForm({ placeId }: { placeId: string }) {
   };
 
   if (status === 'success') {
-    return (
-      <p className="text-green-600 text-sm mt-3">
-        Заявка отправлена! Мы свяжемся с вами в ближайшее время.
-      </p>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="mt-3 space-y-2">
-      <input
-        type="text"
-        placeholder="Ваше имя"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        required
-        className="w-full border rounded-lg px-3 py-2 text-sm"
-      />
-      <input
-        type="text"
-        placeholder="Телефон или Telegram"
-        value={contact}
-        onChange={(e) => setContact(e.target.value)}
-        required
-        className="w-full border rounded-lg px-3 py-2 text-sm"
-      />
-      <textarea
-        placeholder="Комментарий (необязательно)"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        className="w-full border rounded-lg px-3 py-2 text-sm"
-        rows={2}
-      />
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="w-full bg-black text-white rounded-lg py-2 text-sm hover:bg-gray-800 disabled:opacity-50"
-      >
-        {status === 'loading' ? 'Отправка...' : 'Отправить заявку'}
-      </button>
-      {status === 'error' && (
-        <p className="text-red-500 text-sm">Что-то пошло не так, попробуйте ещё раз</p>
-      )}
-    </form>
+    <p className="text-green-600 text-sm mt-3">
+      Заявка отправлена! Мы свяжемся с вами в ближайшее время.
+    </p>
   );
+}
+
+return (
+  <form onSubmit={handleSubmit} className="mt-4 space-y-2">
+    <input
+      type="text"
+      placeholder="Ваше имя"
+      value={name}
+      onChange={(e) => setName(e.target.value)}
+      required
+      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
+    />
+    <input
+      type="text"
+      placeholder="Телефон или Telegram"
+      value={contact}
+      onChange={(e) => setContact(e.target.value)}
+      required
+      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
+    />
+    <textarea
+      placeholder="Комментарий (необязательно)"
+      value={message}
+      onChange={(e) => setMessage(e.target.value)}
+      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
+      rows={2}
+    />
+    <button
+      type="submit"
+      disabled={status === 'loading'}
+      className="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg py-2 text-sm transition-colors disabled:opacity-50"
+    >
+      {status === 'loading' ? 'Отправка...' : 'Отправить заявку'}
+    </button>
+    {status === 'error' && (
+      <p className="text-red-600 text-sm">Что-то пошло не так, попробуйте ещё раз</p>
+    )}
+  </form>
+);
 }
