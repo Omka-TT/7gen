@@ -2,7 +2,17 @@
 
 import { useState } from 'react';
 
-export default function LeadForm({ placeId }: { placeId: string }) {
+type Labels = {
+  name: string;
+  contact: string;
+  message: string;
+  submit: string;
+  sending: string;
+  success: string;
+  error: string;
+};
+
+export default function LeadForm({ placeId, labels }: { placeId: string; labels: Labels }) {
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [message, setMessage] = useState('');
@@ -36,48 +46,48 @@ export default function LeadForm({ placeId }: { placeId: string }) {
   };
 
   if (status === 'success') {
+    return (
+      <p className="rounded-xl bg-green-50 p-4 text-sm font-medium text-green-700">{labels.success}</p>
+    );
+  }
+
+  const inputClass =
+    'w-full rounded-xl border border-red-200 bg-white px-4 py-3 text-sm text-black outline-none transition-colors placeholder:text-gray-400 focus:border-red-500';
+
   return (
-    <p className="text-green-600 text-sm mt-3">
-      Заявка отправлена! Мы свяжемся с вами в ближайшее время.
-    </p>
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <input
+        type="text"
+        placeholder={labels.name}
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        className={inputClass}
+      />
+      <input
+        type="text"
+        placeholder={labels.contact}
+        value={contact}
+        onChange={(e) => setContact(e.target.value)}
+        required
+        className={inputClass}
+      />
+      <textarea
+        placeholder={labels.message}
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        className={inputClass}
+        rows={3}
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="w-full rounded-xl bg-red-600 py-3 text-sm font-semibold text-white transition-all hover:bg-red-700 hover:shadow-lg disabled:opacity-50"
+      >
+        {status === 'loading' ? labels.sending : labels.submit}
+      </button>
+      {status === 'error' && <p className="text-sm text-red-600">{labels.error}</p>}
+    </form>
   );
 }
 
-return (
-  <form onSubmit={handleSubmit} className="mt-4 space-y-2">
-    <input
-      type="text"
-      placeholder="Ваше имя"
-      value={name}
-      onChange={(e) => setName(e.target.value)}
-      required
-      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
-    />
-    <input
-      type="text"
-      placeholder="Телефон или Telegram"
-      value={contact}
-      onChange={(e) => setContact(e.target.value)}
-      required
-      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
-    />
-    <textarea
-      placeholder="Комментарий (необязательно)"
-      value={message}
-      onChange={(e) => setMessage(e.target.value)}
-      className="w-full bg-white text-black border border-red-200 focus:border-red-500 outline-none rounded-lg px-3 py-2 text-sm placeholder:text-gray-400"
-      rows={2}
-    />
-    <button
-      type="submit"
-      disabled={status === 'loading'}
-      className="w-full bg-red-600 hover:bg-red-700 text-white rounded-lg py-2 text-sm transition-colors disabled:opacity-50"
-    >
-      {status === 'loading' ? 'Отправка...' : 'Отправить заявку'}
-    </button>
-    {status === 'error' && (
-      <p className="text-red-600 text-sm">Что-то пошло не так, попробуйте ещё раз</p>
-    )}
-  </form>
-);
-}
